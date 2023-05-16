@@ -12,13 +12,13 @@ enum transactionMode {
 export class IndexedDB {
     private _dbname: string
     private _dbVersion?: number
-    private _storeConfigs: storeConfigType[]
+    private _storeConfig: storeConfigType | null
     private _db: IDBDatabase | null
 
-    constructor(dbname?: string, dbVer?: number, storeConfigs?: storeConfigType[]) {
+    constructor(dbname?: string, dbVer?: number, storeConfig?: storeConfigType) {
         this._dbname = dbname ?? 'default-indexedDB'
         this._dbVersion = dbVer
-        this._storeConfigs = storeConfigs ?? []
+        this._storeConfig = storeConfig ?? null
         this._db = null
     }
 
@@ -27,16 +27,51 @@ export class IndexedDB {
     }
 
     public setStore(config: storeConfigType) {
-        if (this._storeConfigs.indexOf(config) === -1) this._storeConfigs.push(config)
+        this._storeConfig = config
     }
 
     public rmStore(config: storeConfigType) {
-        const index = this._storeConfigs.indexOf(config)
-        if (index !== -1) {
-            const deleteConfig = this._storeConfigs[index]
-            this._storeConfigs.splice(index, 1)
-            this._db?.deleteObjectStore(deleteConfig.name)
-        }
+        return new Promise((resolve, reject) => {
+            if (!('indexedDB' in window)) reject(new Error('The browser does not support indexedDB.'))
+            console.log(`Open indexedDB: [${this._dbname}-${this._dbVersion}]`)
+            const req = window.indexedDB.open(this._dbname, this._dbVersion)
+
+            req.onupgradeneeded = (ev) => {
+                console.log('onupgradeneeded')
+                const target = ev.target as EventTarget & { result: IDBDatabase }
+                const db = target.result
+                this._storeConfig = null
+                if (config) {
+                    console.log(config)
+                    if (db.objectStoreNames.contains(config.name)) {  
+                        try {
+                            db.deleteObjectStore(config.name)
+                        } catch {
+                            reject(new Error(`Failed to delete object store(${config.name}).`))
+                        }
+                    } else {
+                        
+                    }
+                }
+            }
+
+            req.onsuccess = (ev) => {
+                console.log('onsuccess')
+                const target = ev.target as EventTarget & { result: IDBDatabase }
+                this._db = target.result
+                console.log('Current database version:', this._db.version);
+                this._dbVersion = this._db.version
+                resolve(null)
+            }
+
+            req.onerror = () => {
+                reject(new Error('Failed to open indexedDB.'))
+            }
+
+            req.onblocked = () => {
+                reject(new Error('Something blocks the connection to indexedDB. Maybe is the older version.'))
+            }
+        })
     }
 
     public closeDB() {
@@ -64,21 +99,21 @@ export class IndexedDB {
                 console.log('onupgradeneeded')
                 const target = ev.target as EventTarget & { result: IDBDatabase }
                 const db = target.result
-                this._storeConfigs.forEach(storeConfig => {
-                    console.log(storeConfig)
-                    if (!db.objectStoreNames.contains(storeConfig.name)) {  
+                if (this._storeConfig) {
+                    console.log(this._storeConfig)
+                    if (!db.objectStoreNames.contains(this._storeConfig.name)) {  
                         try {
-                            db.createObjectStore(storeConfig.name, { 
-                                keyPath: storeConfig.primaryKey, 
-                                autoIncrement: storeConfig.autoIncrement 
+                            db.createObjectStore(this._storeConfig.name, { 
+                                keyPath: this._storeConfig.primaryKey, 
+                                autoIncrement: this._storeConfig.autoIncrement 
                             })
                         } catch {
-                            reject(new Error(`Failed to create object store(${storeConfig.name}).`))
+                            reject(new Error(`Failed to create object store(${this._storeConfig.name}).`))
                         }
                     } else {
                         
                     }
-                })
+                }
             }
 
             req.onsuccess = (ev) => {
@@ -192,8 +227,11 @@ export class IndexedDB {
     }
 }
 
-// const INIT_DB_NAME = 'my-app'
-
-// const IndexedDBService = new IndexedDB(INIT_DB_NAME)
-// IndexedDBService.openDB()
-// export default IndexedDBService;
+function configComparison(configList: storeConfigType[], config: storeConfigType) {
+    return configList.map((c, index) => {
+        if (c.primaryKey === config.primaryKey && c.name === config.name && c.autoIncrement === config.autoIncrement) {
+            return index
+        }
+        return -1
+    })
+}

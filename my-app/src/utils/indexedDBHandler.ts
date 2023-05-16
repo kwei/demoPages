@@ -27,7 +27,6 @@ const dbService = () => {
             IndexedDBService.closeDB()
             IndexedDBService.newVersion()
             IndexedDBService.rmStore({ name, primaryKey, autoIncrement })
-            await IndexedDBService.openDB().then(() => console.log('createStore success'))
             IndexedDBService.closeDB()
         })
     }

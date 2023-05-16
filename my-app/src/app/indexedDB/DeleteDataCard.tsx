@@ -4,23 +4,23 @@ import { Card } from "@/components/Card"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useRef } from "react"
 
-export const DeleteStoreCard = () => {
+export const DeleteDataCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
-    const storeKeyRef = useRef<HTMLInputElement>(null)
-
-    const removeObjectStore = () => {
-        if (storeNameRef.current && storeKeyRef.current) {
+    const idRef = useRef<HTMLInputElement>(null)
+    
+    const handleDeleteStore = () => {
+        if (storeNameRef.current && idRef.current) {
             const storeName = storeNameRef.current.value
+            const id = idRef.current.value
             storeNameRef.current.value = ''
-            const primaryKey = storeKeyRef.current.value
-            storeKeyRef.current.value = ''
-            dbHandler.removeStore(storeName, primaryKey === '' ? 'id' : primaryKey, primaryKey === '')
+            idRef.current.value = ''
+            dbHandler.deleteData(storeName, Number(id))
         }
     }
-    
+
     return (
         <Card className="flex-col gap-4 flex-1 shrink-0 basis-[48%]">
-            <span className="text-bold text-xl">Delete Object Store</span>
+            <span className="text-bold text-xl">Delete Data from Object Store</span>
             <div className="relative flex flex-col gap-1.25">
                 <span className="text-semibold">Store Name</span>
                 <input 
@@ -32,19 +32,19 @@ export const DeleteStoreCard = () => {
                 />
             </div>
             <div className="relative flex flex-col gap-1.25">
-                <span className="text-semibold">Primary Key</span>
+                <span className="text-semibold">ID</span>
                 <input 
-                    ref={storeKeyRef} 
+                    ref={idRef} 
                     className="p-1.25 rounded-1.25 outline-none text-black" 
-                    name="primaryKey" 
+                    name="ID" 
                     type="text" 
-                    placeholder="ex: id" 
+                    placeholder="ex: 0" 
                 />
             </div>
             <div className="relative flex flex-1 w-full items-end">
                 <span 
                     className="w-fit rounded-2.5 cursor-pointer px-4 py-2 bg-[#015ef7]"
-                    onClick={removeObjectStore}
+                    onClick={handleDeleteStore}
                 >
                     Remove
                 </span>
