@@ -30,6 +30,13 @@ export class IndexedDB {
         if (this._storeConfigs.indexOf(config) === -1) this._storeConfigs.push(config)
     }
 
+    public rmStore(config: storeConfigType) {
+        const index = this._storeConfigs.indexOf(config)
+        if (index !== -1) {
+            this._storeConfigs.splice(index, 1)
+        }
+    }
+
     public closeDB() {
         if (this._db) this._db.close()
     }

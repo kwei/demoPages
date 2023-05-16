@@ -20,6 +20,17 @@ const dbService = () => {
             IndexedDBService.closeDB()
         })
     }
+
+    const removeStore = (name: string, primaryKey: string, autoIncrement: boolean) => {
+        return new Promise(async () => {
+            if (!IndexedDBService) return
+            IndexedDBService.closeDB()
+            IndexedDBService.newVersion()
+            IndexedDBService.rmStore({ name, primaryKey, autoIncrement })
+            await IndexedDBService.openDB().then(() => console.log('createStore success'))
+            IndexedDBService.closeDB()
+        })
+    }
     
     const getData = (storeName: string, id: IDBValidKey) => {
         return new Promise(async (resolve) => {
@@ -75,6 +86,7 @@ const dbService = () => {
     return {
         createDB,
         createStore,
+        removeStore,
         getData,
         getAllData,
         addData,
