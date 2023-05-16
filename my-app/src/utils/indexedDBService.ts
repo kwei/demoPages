@@ -33,7 +33,9 @@ export class IndexedDB {
     public rmStore(config: storeConfigType) {
         const index = this._storeConfigs.indexOf(config)
         if (index !== -1) {
+            const deleteConfig = this._storeConfigs[index]
             this._storeConfigs.splice(index, 1)
+            this._db?.deleteObjectStore(deleteConfig.name)
         }
     }
 
@@ -63,8 +65,8 @@ export class IndexedDB {
                 const target = ev.target as EventTarget & { result: IDBDatabase }
                 const db = target.result
                 this._storeConfigs.forEach(storeConfig => {
-                    if (!db.objectStoreNames.contains(storeConfig.name)) {
-                        console.log(storeConfig)
+                    console.log(storeConfig)
+                    if (!db.objectStoreNames.contains(storeConfig.name)) {  
                         try {
                             db.createObjectStore(storeConfig.name, { 
                                 keyPath: storeConfig.primaryKey, 
@@ -73,6 +75,8 @@ export class IndexedDB {
                         } catch {
                             reject(new Error(`Failed to create object store(${storeConfig.name}).`))
                         }
+                    } else {
+                        
                     }
                 })
             }
