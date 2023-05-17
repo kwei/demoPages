@@ -27,9 +27,9 @@ export const ActionCard = () => {
 
     return (
         <Card className="flex-col gap-4 flex-1 shrink-0 basis-[48%]">
-            <span className="text-bold text-xl">Create or Delete DB</span>
+            <span className="font-bold text-xl">Create or Delete DB</span>
             <div className="relative flex flex-col gap-1.25">
-                <span className="text-semibold">DB Name</span>
+                <span className="font-semibold">DB Name</span>
                 <input 
                     ref={dbNameRef} 
                     className="p-1.25 rounded-1.25 outline-none text-black" 
@@ -38,16 +38,16 @@ export const ActionCard = () => {
                     placeholder="ex: my-app" 
                 />
             </div>
-            <div className="relative flex flex-1 w-full items-end">
+            <div className="relative flex flex-1 w-full items-end flex-wrap">
                 <div className="relative flex items-center gap-4">
                 <span 
-                    className="w-fit h-fit rounded-2.5 cursor-pointer px-4 py-2 bg-[#e91e63] text-black"
+                    className="w-fit font-semibold h-fit rounded-2.5 whitespace-nowrap cursor-pointer px-8 py-2 bg-[var(--btn-bg-red)]"
                     onClick={handleDeleteDB}
                 >
                     Delete DB
                 </span>
                 <span 
-                    className="w-fit h-fit rounded-2.5 cursor-pointer px-4 py-2 bg-[#015ef7]"
+                    className="w-fit font-semibold h-fit rounded-2.5 whitespace-nowrap cursor-pointer px-8 py-2 bg-[var(--btn-bg-blue)]"
                     onClick={handleCreateDB}
                 >
                     Create DB

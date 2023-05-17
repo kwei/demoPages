@@ -15,7 +15,7 @@ export enum BLOCK_SCALES {
 
 export const Card = React.memo((props: CardPropsType) => {
   const { scale = BLOCK_SCALES.LARGE, children, className = '' } = props;
-  const defaultClass = 'relative flex rounded-5 p-5 ml:p-7.5 border border-solid border-mz-gray-df';
+  const defaultClass = 'relative flex rounded-5 p-5 ml:p-7.5 border border-solid border-[var(--border-rgb)]';
   const cardScale = {
     [BLOCK_SCALES.LARGE]: 'w-full',
     [BLOCK_SCALES.MEDIUM]: 'w-48/100',

@@ -3,16 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 25, 25, 25;
+  --background-start-rgb: 243, 243, 243;
+  --background-end-rgb: 243, 243, 243;
+  --border-rgb: rgb(25, 25, 25);
+  --btn-bg-blue: #41A1FBFF;
+  --btn-bg-red: #EE4D8FFF;
+  --btn-bg-gray: #A1A1A1FF;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 228, 228, 228;
+    --background-start-rgb: 25, 25, 25;
+    --background-end-rgb: 25, 25, 25;
+    --border-rgb: rgb(223, 223, 223);
+    --btn-bg-blue: #074FCBFF;
+    --btn-bg-red: #E91E63FF;
+    --btn-bg-gray: #595959FF;
   }
 }
 
@@ -24,4 +32,6 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  
+  font-family: "Poppins", "Open Sans", Meiryo, 微軟正黑體, "MS UI Gothic", "MS PGothic", Arial, Helvetica, sans-serif !important;
 }

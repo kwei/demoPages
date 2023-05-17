@@ -34,9 +34,9 @@ export const UpdateDataCard = () => {
 
     return (
         <Card className="flex-col gap-4 flex-1 shrink-0 basis-[48%]">
-            <span className="text-bold text-xl">Update Data in Object Store</span>
+            <span className="font-bold text-xl">Update Data in Object Store</span>
             <div className="relative flex flex-col gap-1.25">
-                <span className="text-semibold">Store Name</span>
+                <span className="font-semibold">Store Name</span>
                 <input 
                     ref={storeNameRef} 
                     className="p-1.25 rounded-1.25 outline-none text-black" 
@@ -46,7 +46,7 @@ export const UpdateDataCard = () => {
                 />
             </div>
             <div className="relative flex flex-col gap-1.25">
-                <span className="text-semibold">Data</span>
+                <span className="font-semibold">Data</span>
                 <input 
                     ref={dataRef} 
                     className="p-1.25 rounded-1.25 outline-none text-black" 
@@ -56,7 +56,7 @@ export const UpdateDataCard = () => {
                 />
             </div>
             <div className="relative flex flex-col gap-1.25">
-                <span className="text-semibold">ID</span>
+                <span className="font-semibold">ID</span>
                 <input 
                     ref={idRef} 
                     className="p-1.25 rounded-1.25 outline-none text-black" 
@@ -65,16 +65,16 @@ export const UpdateDataCard = () => {
                     placeholder="ex: 0" 
                 />
             </div>
-            <div className="relative flex flex-1 w-full items-end">
+            <div className="relative flex flex-1 w-full items-end flex-wrap">
                 <div className="relative flex items-center gap-4">
                     <span 
-                        className="w-fit rounded-2.5 cursor-pointer px-4 py-2 bg-[#015ef7]"
+                        className="w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 bg-[var(--btn-bg-blue)]"
                         onClick={addDataToStore}
                     >
                         Update Data
                     </span>
                     <span 
-                        className="w-fit rounded-2.5 cursor-pointer px-4 py-2 bg-[#a9a9a9]"
+                        className="w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 bg-[var(--btn-bg-gray)]"
                         onClick={getStore}
                     >
                         Get Data
