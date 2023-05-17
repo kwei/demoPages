@@ -2,11 +2,12 @@
 
 import { Card } from "@/components/Card"
 import dbHandler from "@/utils/indexedDBHandler"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 export const DeleteStoreCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
     const storeKeyRef = useRef<HTMLInputElement>(null)
+    const [editKey, setEditKey] = useState<boolean>(false)
 
     const removeObjectStore = () => {
         if (storeNameRef.current && storeKeyRef.current) {
@@ -17,10 +18,15 @@ export const DeleteStoreCard = () => {
             dbHandler.removeStore(storeName, primaryKey === '' ? 'id' : primaryKey, primaryKey === '')
         }
     }
+
+    const triggerAbleInputKey = () => setEditKey(prevState => !prevState)
     
     return (
         <Card className="flex-col gap-4 flex-1 shrink-0 basis-[48%]">
-            <span className="font-bold text-xl">Delete Object Store</span>
+            <div className="relative flex flex-col gap-1.25">
+                <span className="font-bold text-xl">Delete Object Store</span>
+                <span className="font-normal text-sm">Default primary key is "id".</span>
+            </div>
             <div className="relative flex flex-col gap-1.25">
                 <span className="font-semibold">Store Name</span>
                 <input 
@@ -32,21 +38,27 @@ export const DeleteStoreCard = () => {
                 />
             </div>
             <div className="relative flex flex-col gap-1.25">
-                <span className="font-semibold">Primary Key</span>
+                <span className="relative flex items-center font-semibold gap-1.25">
+                    Primary Key
+                    <span className="select-none cursor-pointer px-2 border border-[var(--border-rgb)]" onClick={triggerAbleInputKey}>
+                        {editKey ? 'close' : 'open'}
+                    </span>
+                </span>
                 <input 
                     ref={storeKeyRef} 
                     className="p-1.25 rounded-1.25 outline-none text-black" 
                     name="primaryKey" 
                     type="text" 
                     placeholder="ex: id" 
+                    disabled={!editKey}
                 />
             </div>
             <div className="relative flex flex-1 w-full items-end">
                 <span 
-                    className="w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 bg-[var(--btn-bg-blue)]"
+                    className="select-none w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 bg-[var(--btn-bg-red)]"
                     onClick={removeObjectStore}
                 >
-                    Remove
+                    Remove Store
                 </span>
             </div>
         </Card>

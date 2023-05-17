@@ -43,10 +43,10 @@ export const DeleteDataCard = () => {
             </div>
             <div className="relative flex flex-1 w-full items-end">
                 <span 
-                    className="w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 bg-[var(--btn-bg-blue)]"
+                    className="select-none w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 bg-[var(--btn-bg-red)]"
                     onClick={handleDeleteStore}
                 >
-                    Remove
+                    Remove Data
                 </span>
             </div>
         </Card>

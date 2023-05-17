@@ -44,10 +44,10 @@ export const AddDataCard = () => {
             </div>
             <div className="relative flex flex-1 w-full items-end">
                 <span 
-                    className="w-fit font-semibold rounded-2.5 whitespace-nowrap cursor-pointer px-8 py-2 bg-[var(--btn-bg-blue)]"
+                    className="select-none w-fit font-semibold rounded-2.5 whitespace-nowrap cursor-pointer px-8 py-2 bg-[var(--btn-bg-blue)]"
                     onClick={addDataToStore}
                 >
-                    Add
+                    Add Data
                 </span>
             </div>
         </Card>
