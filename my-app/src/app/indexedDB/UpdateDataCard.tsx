@@ -1,5 +1,6 @@
 "use client"
 
+import { Button } from "@/components/Button"
 import { Card } from "@/components/Card"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useCallback, useRef, useState } from "react"
@@ -9,10 +10,13 @@ export const UpdateDataCard = () => {
     const dataRef = useRef<HTMLInputElement>(null)
     const idRef = useRef<HTMLInputElement>(null)
     const [hasGetData, setHasGetData] = useState<boolean>(false)
+    const [isGet, setIsGet] = useState<boolean>(false)
+    const [isUpdate, setIsUpdate] = useState<boolean>(false)
 
-    const addDataToStore = useCallback(() => {
+    const updateDataToStore = useCallback(() => {
         if (!hasGetData) return false
         if (storeNameRef.current && dataRef.current && idRef.current) {
+            setIsUpdate(true)
             const storeName = storeNameRef.current.value
             const data = dataRef.current.value
             const id = idRef.current.value
@@ -20,12 +24,16 @@ export const UpdateDataCard = () => {
             idRef.current.value = ''
             storeNameRef.current.value = ''
             dbHandler.updateData(storeName, { value: data, id: Number(id) })
-            .finally(() => setHasGetData(false))
+            .finally(() => {
+                setHasGetData(false)
+                setIsUpdate(false)
+            })
         }
     }, [hasGetData])
 
     const getStore = () => {
         if (storeNameRef.current && idRef.current) {
+            setIsGet(true)
             const storeName = storeNameRef.current.value
             const id = idRef.current.value
             dbHandler.getData(storeName, Number(id))
@@ -33,7 +41,10 @@ export const UpdateDataCard = () => {
                 const {value} = data as { value: string, id: number }
                 if (dataRef.current) dataRef.current.value = value
             })
-            .finally(() => setHasGetData(true))
+            .finally(() => {
+                setHasGetData(true)
+                setIsGet(false)
+            })
         }
     }
 
@@ -75,18 +86,8 @@ export const UpdateDataCard = () => {
             </div>
             <div className="relative flex flex-1 w-full items-end flex-wrap">
                 <div className="relative flex items-center gap-4">
-                    <span 
-                        className={`select-none w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 ${hasGetData ? 'bg-[var(--btn-bg-blue)]' : 'bg-[var(--btn-bg-gray)]'}`}
-                        onClick={addDataToStore}
-                    >
-                        Update Data
-                    </span>
-                    <span 
-                        className={`select-none w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 ${hasGetData ? 'bg-[var(--btn-bg-gray)]' : 'bg-[var(--btn-bg-blue)]'}`}
-                        onClick={getStore}
-                    >
-                        Get Data
-                    </span>
+                    <Button onClick={updateDataToStore} loading={isUpdate} color={hasGetData ? 'blue' : 'gray'}>Update Data</Button>
+                    <Button onClick={getStore} loading={isGet} color={hasGetData ? 'gray' : 'blue'}>Get Data</Button>
                 </div>
             </div>
         </Card>

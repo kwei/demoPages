@@ -79,14 +79,16 @@ export class IndexedDB {
     }
 
     public deleteDB(dbName?: string) {
-        if (!('indexedDB' in window)) {
-            console.error('The browser does not support indexedDB.')
-        } else {
-            console.log(`Delete indexedDB of name ${dbName ?? this._dbname}`)
-            const req = window.indexedDB.deleteDatabase(dbName ?? this._dbname)
-            req.onsuccess = () => console.log('Delete indexedDB succeed')
-            req.onerror = () => console.log('Delete indexedDB failed')
-        }
+        return new Promise((resolve, reject) => {
+            if (!('indexedDB' in window)) {
+                reject('The browser does not support indexedDB.')
+            } else {
+                console.log(`Delete indexedDB of name ${dbName ?? this._dbname}`)
+                const req = window.indexedDB.deleteDatabase(dbName ?? this._dbname)
+                req.onsuccess = () => resolve('Delete indexedDB succeed')
+                req.onerror = () => reject('Delete indexedDB failed')
+            }
+        })
     }
 
     public openDB() {

@@ -1,21 +1,25 @@
 "use client"
 
+import { Button } from "@/components/Button"
 import { Card } from "@/components/Card"
 import dbHandler from "@/utils/indexedDBHandler"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 
 export const AddDataCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
     const dataRef = useRef<HTMLInputElement>(null)
+    const [isAdd, setIsAdd] = useState<boolean>(false)
 
     const addDataToStore = () => {
         if (storeNameRef.current && dataRef.current) {
+            setIsAdd(true)
             const storeName = storeNameRef.current.value
             storeNameRef.current.value = ''
             const data = dataRef.current.value
             dataRef.current.value = ''
             dbHandler.addData(storeName, { value: data })
+            .finally(() => setIsAdd(false))
         }
     }
 
@@ -43,12 +47,7 @@ export const AddDataCard = () => {
                 />
             </div>
             <div className="relative flex flex-1 w-full items-end">
-                <span 
-                    className="select-none w-fit font-semibold rounded-2.5 whitespace-nowrap cursor-pointer px-8 py-2 bg-[var(--btn-bg-blue)]"
-                    onClick={addDataToStore}
-                >
-                    Add Data
-                </span>
+                <Button onClick={addDataToStore} loading={isAdd} color="blue">Add Data</Button>
             </div>
         </Card>
     )

@@ -1,27 +1,34 @@
 "use client"
 
 import { Card } from "@/components/Card"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import dbHandler from "@/utils/indexedDBHandler"
+import { Button } from "@/components/Button"
 
 export const ActionCard = () => {
     const dbNameRef = useRef<HTMLInputElement>(null)
+    const [isDelete, setIsDelete] = useState<boolean>(false)
+    const [isCreate, setIsCreate] = useState<boolean>(false)
 
     const handleDeleteDB = () => {
         if (dbNameRef.current) {
+            setIsDelete(true)
             const dbName = dbNameRef.current.value
             dbNameRef.current.value = ''
             console.log('deleteDB: ', dbName === '' ? undefined : dbName)
             dbHandler.deleteDB(dbName === '' ? undefined : dbName)
+            .finally(() => setIsDelete(false))
         }
     }
 
     const handleCreateDB = () => {
         if (dbNameRef.current) {
+            setIsCreate(true)
             const dbName = dbNameRef.current.value
             dbNameRef.current.value = ''
             console.log('createDB: ', dbName === '' ? undefined : dbName)
             dbHandler.createDB(dbName === '' ? undefined : dbName)
+            .finally(() => setIsCreate(false))
         }
     }
 
@@ -43,18 +50,8 @@ export const ActionCard = () => {
             </div>
             <div className="relative flex flex-1 w-full items-end flex-wrap">
                 <div className="relative flex items-center gap-4">
-                <span 
-                    className="select-none w-fit font-semibold h-fit rounded-2.5 whitespace-nowrap cursor-pointer px-8 py-2 bg-[var(--btn-bg-red)]"
-                    onClick={handleDeleteDB}
-                >
-                    Delete DB
-                </span>
-                <span 
-                    className="select-none w-fit font-semibold h-fit rounded-2.5 whitespace-nowrap cursor-pointer px-8 py-2 bg-[var(--btn-bg-blue)]"
-                    onClick={handleCreateDB}
-                >
-                    Create DB
-                </span>
+                    <Button onClick={handleDeleteDB} loading={isDelete} color="red">Delete DB</Button>
+                    <Button onClick={handleCreateDB} loading={isCreate} color="blue">Create DB</Button>
                 </div>
             </div>
         </Card>

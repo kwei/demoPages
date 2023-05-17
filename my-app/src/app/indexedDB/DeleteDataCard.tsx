@@ -1,20 +1,24 @@
 "use client"
 
+import { Button } from "@/components/Button"
 import { Card } from "@/components/Card"
 import dbHandler from "@/utils/indexedDBHandler"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 export const DeleteDataCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
     const idRef = useRef<HTMLInputElement>(null)
+    const [isDelete, setIsDelete] = useState<boolean>(false)
     
     const handleDeleteStore = () => {
         if (storeNameRef.current && idRef.current) {
+            setIsDelete(true)
             const storeName = storeNameRef.current.value
             const id = idRef.current.value
             storeNameRef.current.value = ''
             idRef.current.value = ''
             dbHandler.deleteData(storeName, Number(id))
+            .finally(() => setIsDelete(false))
         }
     }
 
@@ -42,12 +46,7 @@ export const DeleteDataCard = () => {
                 />
             </div>
             <div className="relative flex flex-1 w-full items-end">
-                <span 
-                    className="select-none w-fit font-semibold whitespace-nowrap rounded-2.5 cursor-pointer px-8 py-2 bg-[var(--btn-bg-red)]"
-                    onClick={handleDeleteStore}
-                >
-                    Remove Data
-                </span>
+                <Button onClick={handleDeleteStore} loading={isDelete} color="red">Remove Data</Button>
             </div>
         </Card>
     )
