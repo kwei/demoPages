@@ -77,9 +77,14 @@ const dbService = () => {
     }
     
     const deleteDB = (dbName?: string) => {
-        if (!IndexedDBService) return
-        IndexedDBService.closeDB()
-        IndexedDBService.deleteDB(dbName)
+        if (!IndexedDBService) {
+            IndexedDBService = new IndexedDB(dbName ?? defaultDBName)
+            IndexedDBService.closeDB()
+            IndexedDBService.deleteDB(dbName)
+        } else {
+            IndexedDBService.closeDB()
+            IndexedDBService.deleteDB(dbName)
+        }
     }
     
     return {
