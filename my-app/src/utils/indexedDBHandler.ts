@@ -11,7 +11,7 @@ const dbService = () => {
             IndexedDBService = new IndexedDB(dbName ?? defaultDBName)
             await IndexedDBService.openDB()
             IndexedDBService.closeDB()
-            resolve(null)
+            resolve('Create DB Success')
         })
     }
 
@@ -24,7 +24,7 @@ const dbService = () => {
                 IndexedDBService.setStore({ name, primaryKey, autoIncrement })
                 await IndexedDBService.openDB().then(() => console.log('createStore success'))
                 IndexedDBService.closeDB()
-                resolve(null)
+                resolve('Create Store Success')
             }
         })
     }
@@ -37,7 +37,7 @@ const dbService = () => {
                 IndexedDBService.newVersion()
                 await IndexedDBService.rmStore({ name, primaryKey, autoIncrement })
                 IndexedDBService.closeDB()
-                resolve(null)
+                resolve('Delete Store Success')
             }
         })
     }
@@ -71,7 +71,7 @@ const dbService = () => {
                 await IndexedDBService.openDB()
                 await IndexedDBService.addData(storeName, data)
                 IndexedDBService.closeDB()
-                resolve(null)
+                resolve('Add Data Success')
             }
         })
     }
@@ -83,7 +83,7 @@ const dbService = () => {
                 await IndexedDBService.openDB()
                 await IndexedDBService.updateData(storeName, data)
                 IndexedDBService.closeDB()
-                resolve(null)
+                resolve('Update Data Success')
             }
         })
     }
@@ -95,7 +95,7 @@ const dbService = () => {
                 await IndexedDBService.openDB()
                 await IndexedDBService.deleteData(storeName, id)
                 IndexedDBService.closeDB()
-                resolve(null)
+                resolve('Delete Data Success')
             }
         })
     }
@@ -110,7 +110,7 @@ const dbService = () => {
                 IndexedDBService.closeDB()
                 await IndexedDBService.deleteDB(dbName)
             }
-            resolve(null)
+            resolve('Delete DB Success')
         })
     }
     

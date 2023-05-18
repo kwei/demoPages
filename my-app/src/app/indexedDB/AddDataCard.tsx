@@ -5,6 +5,7 @@ import { Card } from "@/components/Card"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useCallback, useRef, useState } from "react"
 import { dataType, fileObjectType } from "./constants"
+import { Toast, ToastRefType } from "@/components/Toast"
 
 
 export const AddDataCard = () => {
@@ -12,6 +13,10 @@ export const AddDataCard = () => {
     const dataRef = useRef<HTMLInputElement>(null)
     const [isAdd, setIsAdd] = useState<boolean>(false)
     const [files, setFiles] = useState<fileObjectType[] | null>(null)
+    const toastRef = useRef<ToastRefType>(null)
+    const [toastTitle, setToastTitle] = useState<string>('')
+    const [toastDesc, setToastDesc] = useState<string>('')
+    const [toastType, setToastType] = useState<'success' | 'error' | 'warning'>('success')
 
     const addDataToStore = useCallback(() => {
         if (storeNameRef.current && dataRef.current) {
@@ -36,6 +41,18 @@ export const AddDataCard = () => {
                 }
             }
             dbHandler.addData(storeName, { value: convertedData, type })
+            .then(() => {
+                setToastTitle('Add Data')
+                setToastDesc('Success')
+                setToastType('success')
+                if (toastRef.current) toastRef.current.trigger()
+            })
+            .catch((msg: string) => {
+                setToastTitle('Add Data')
+                setToastDesc(msg)
+                setToastType('error')
+                if (toastRef.current) toastRef.current.trigger()
+            })
             .finally(() => {
                 setIsAdd(false)
                 setFiles(null)
@@ -117,6 +134,7 @@ export const AddDataCard = () => {
                     <Button onClick={reset} variant="outline" color="gray">Reset</Button>
                 </div>
             </div>
+            <Toast ref={toastRef} title={toastTitle} desc={toastDesc} type={toastType} />
         </Card>
     )
 }

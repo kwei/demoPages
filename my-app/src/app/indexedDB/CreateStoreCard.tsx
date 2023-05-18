@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/Button"
 import { Card } from "@/components/Card"
+import { Toast, ToastRefType } from "@/components/Toast"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useRef, useState } from "react"
 
@@ -10,6 +11,10 @@ export const CreateStoreCard = () => {
     const storeKeyRef = useRef<HTMLInputElement>(null)
     const [editKey, setEditKey] = useState<boolean>(false)
     const [isCreate, setIsCreate] = useState<boolean>(false)
+    const toastRef = useRef<ToastRefType>(null)
+    const [toastTitle, setToastTitle] = useState<string>('')
+    const [toastDesc, setToastDesc] = useState<string>('')
+    const [toastType, setToastType] = useState<'success' | 'error' | 'warning'>('success')
 
     const createObjectStore = () => {
         if (storeNameRef.current && storeKeyRef.current) {
@@ -19,6 +24,18 @@ export const CreateStoreCard = () => {
             const primaryKey = storeKeyRef.current.value
             storeKeyRef.current.value = ''
             dbHandler.createStore(storeName, primaryKey === '' ? 'id' : primaryKey, primaryKey === '')
+            .then(() => {
+                setToastTitle('Create Store')
+                setToastDesc('Success')
+                setToastType('success')
+                if (toastRef.current) toastRef.current.trigger()
+            })
+            .catch((msg: string) => {
+                setToastTitle('Create Store')
+                setToastDesc(msg)
+                setToastType('error')
+                if (toastRef.current) toastRef.current.trigger()
+            })
             .finally(() => setIsCreate(false))
         }
     }
@@ -60,6 +77,7 @@ export const CreateStoreCard = () => {
             <div className="relative flex flex-1 w-full items-end">
                 <Button onClick={createObjectStore} loading={isCreate} color="blue">Create Store</Button>
             </div>
+            <Toast ref={toastRef} title={toastTitle} desc={toastDesc} type={toastType} />
         </Card>
     )
 }

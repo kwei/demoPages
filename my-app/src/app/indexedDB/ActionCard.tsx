@@ -4,11 +4,16 @@ import { Card } from "@/components/Card"
 import { useRef, useState } from "react"
 import dbHandler from "@/utils/indexedDBHandler"
 import { Button } from "@/components/Button"
+import { Toast, ToastRefType } from "@/components/Toast"
 
 export const ActionCard = () => {
     const dbNameRef = useRef<HTMLInputElement>(null)
+    const toastRef = useRef<ToastRefType>(null)
     const [isDelete, setIsDelete] = useState<boolean>(false)
     const [isCreate, setIsCreate] = useState<boolean>(false)
+    const [toastTitle, setToastTitle] = useState<string>('')
+    const [toastDesc, setToastDesc] = useState<string>('')
+    const [toastType, setToastType] = useState<'success' | 'error' | 'warning'>('success')
 
     const handleDeleteDB = () => {
         if (dbNameRef.current) {
@@ -17,7 +22,15 @@ export const ActionCard = () => {
             dbNameRef.current.value = ''
             console.log('deleteDB: ', dbName === '' ? undefined : dbName)
             dbHandler.deleteDB(dbName === '' ? undefined : dbName)
-            .finally(() => setIsDelete(false))
+            .then(() => {
+                setToastTitle('Delete DB')
+                setToastDesc('Success')
+                setToastType('success')
+                if (toastRef.current) toastRef.current.trigger()
+            })
+            .finally(() => {
+                setIsDelete(false)
+            })
         }
     }
 
@@ -28,7 +41,15 @@ export const ActionCard = () => {
             dbNameRef.current.value = ''
             console.log('createDB: ', dbName === '' ? undefined : dbName)
             dbHandler.createDB(dbName === '' ? undefined : dbName)
-            .finally(() => setIsCreate(false))
+            .then(() => {
+                setToastTitle('Create DB')
+                setToastDesc('Success')
+                setToastType('success')
+                if (toastRef.current) toastRef.current.trigger()
+            })
+            .finally(() => {
+                setIsCreate(false)
+            })
         }
     }
 
@@ -54,6 +75,7 @@ export const ActionCard = () => {
                     <Button onClick={handleCreateDB} loading={isCreate} color="blue">Create DB</Button>
                 </div>
             </div>
+            <Toast ref={toastRef} title={toastTitle} desc={toastDesc} type={toastType} />
         </Card>
     )
 }

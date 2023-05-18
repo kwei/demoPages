@@ -5,6 +5,7 @@ import { Card } from "@/components/Card"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useCallback, useRef, useState } from "react"
 import { dataType, fileObjectType } from "./constants"
+import { Toast, ToastRefType } from "@/components/Toast"
 
 export const UpdateDataCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
@@ -14,6 +15,10 @@ export const UpdateDataCard = () => {
     const [isGet, setIsGet] = useState<boolean>(false)
     const [isUpdate, setIsUpdate] = useState<boolean>(false)
     const [files, setFiles] = useState<fileObjectType[] | null>(null)
+    const toastRef = useRef<ToastRefType>(null)
+    const [toastTitle, setToastTitle] = useState<string>('')
+    const [toastDesc, setToastDesc] = useState<string>('')
+    const [toastType, setToastType] = useState<'success' | 'error' | 'warning'>('success')
 
     const updateDataToStore = useCallback(() => {
         if (!hasGetData) return false
@@ -41,6 +46,18 @@ export const UpdateDataCard = () => {
                 }
             }
             dbHandler.updateData(storeName, { value: convertedData, id: Number(id), type })
+            .then(() => {
+                setToastTitle('Update Data')
+                setToastDesc('Success')
+                setToastType('success')
+                if (toastRef.current) toastRef.current.trigger()
+            })
+            .catch((msg: string) => {
+                setToastTitle('Update Data')
+                setToastDesc(msg)
+                setToastType('error')
+                if (toastRef.current) toastRef.current.trigger()
+            })
             .finally(() => {
                 setHasGetData(false)
                 setIsUpdate(false)
@@ -77,6 +94,19 @@ export const UpdateDataCard = () => {
                     dataRef.current.value = convertedData
                     dataRef.current.disabled = true
                 }
+                return 'Get Data Success'
+            })
+            .then(() => {
+                setToastTitle('Get Data')
+                setToastDesc('Success')
+                setToastType('success')
+                if (toastRef.current) toastRef.current.trigger()
+            })
+            .catch((msg: string) => {
+                setToastTitle('Get Data')
+                setToastDesc(msg)
+                setToastType('error')
+                if (toastRef.current) toastRef.current.trigger()
             })
             .finally(() => {
                 setHasGetData(true)
@@ -182,6 +212,7 @@ export const UpdateDataCard = () => {
                     <Button onClick={reset} variant="outline" color="gray">Reset</Button>
                 </div>
             </div>
+            <Toast ref={toastRef} title={toastTitle} desc={toastDesc} type={toastType} />
         </Card>
     )
 }

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/Button"
 import { Card } from "@/components/Card"
+import { Toast, ToastRefType } from "@/components/Toast"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useRef, useState } from "react"
 
@@ -9,6 +10,10 @@ export const DeleteDataCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
     const idRef = useRef<HTMLInputElement>(null)
     const [isDelete, setIsDelete] = useState<boolean>(false)
+    const toastRef = useRef<ToastRefType>(null)
+    const [toastTitle, setToastTitle] = useState<string>('')
+    const [toastDesc, setToastDesc] = useState<string>('')
+    const [toastType, setToastType] = useState<'success' | 'error' | 'warning'>('success')
     
     const handleDeleteStore = () => {
         if (storeNameRef.current && idRef.current) {
@@ -18,6 +23,18 @@ export const DeleteDataCard = () => {
             storeNameRef.current.value = ''
             idRef.current.value = ''
             dbHandler.deleteData(storeName, Number(id))
+            .then(() => {
+                setToastTitle('Delete Data')
+                setToastDesc('Success')
+                setToastType('success')
+                if (toastRef.current) toastRef.current.trigger()
+            })
+            .catch((msg: string) => {
+                setToastTitle('Delete Data')
+                setToastDesc(msg)
+                setToastType('error')
+                if (toastRef.current) toastRef.current.trigger()
+            })
             .finally(() => setIsDelete(false))
         }
     }
@@ -48,6 +65,7 @@ export const DeleteDataCard = () => {
             <div className="relative flex flex-1 w-full items-end">
                 <Button onClick={handleDeleteStore} loading={isDelete} color="red">Remove Data</Button>
             </div>
+            <Toast ref={toastRef} title={toastTitle} desc={toastDesc} type={toastType} />
         </Card>
     )
 }
