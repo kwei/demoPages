@@ -70,6 +70,9 @@ const dbService = () => {
             else {
                 await IndexedDBService.openDB()
                 await IndexedDBService.addData(storeName, data)
+                .catch((msg: string) => {
+                    console.log(msg)
+                })
                 IndexedDBService.closeDB()
                 resolve('Add Data Success')
             }

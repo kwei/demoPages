@@ -32,7 +32,7 @@ export class IndexedDB {
 
     public rmStore(config: storeConfigType) {
         return new Promise((resolve, reject) => {
-            if (!('indexedDB' in window)) reject(new Error('The browser does not support indexedDB.'))
+            if (!('indexedDB' in window)) reject('The browser does not support indexedDB.')
             console.log(`Open indexedDB: [${this._dbname}-${this._dbVersion}]`)
             const req = window.indexedDB.open(this._dbname, this._dbVersion)
 
@@ -47,7 +47,7 @@ export class IndexedDB {
                         try {
                             db.deleteObjectStore(config.name)
                         } catch {
-                            reject(new Error(`Failed to delete object store(${config.name}).`))
+                            reject(`Failed to delete object store(${config.name}).`)
                         }
                     } else {
                         
@@ -65,11 +65,11 @@ export class IndexedDB {
             }
 
             req.onerror = () => {
-                reject(new Error('Failed to open indexedDB.'))
+                reject('Failed to open indexedDB.')
             }
 
             req.onblocked = () => {
-                reject(new Error('Something blocks the connection to indexedDB. Maybe is the older version.'))
+                reject('Something blocks the connection to indexedDB. Maybe is the older version.')
             }
         })
     }
@@ -93,7 +93,7 @@ export class IndexedDB {
 
     public openDB() {
         return new Promise((resolve, reject) => {
-            if (!('indexedDB' in window)) reject(new Error('The browser does not support indexedDB.'))
+            if (!('indexedDB' in window)) reject('The browser does not support indexedDB.')
             console.log(`Open indexedDB: [${this._dbname}-${this._dbVersion}]`)
             const req = window.indexedDB.open(this._dbname, this._dbVersion)
 
@@ -110,7 +110,7 @@ export class IndexedDB {
                                 autoIncrement: this._storeConfig.autoIncrement 
                             })
                         } catch {
-                            reject(new Error(`Failed to create object store(${this._storeConfig.name}).`))
+                            reject(`Failed to create object store(${this._storeConfig.name}).`)
                         }
                     } else {
                         
@@ -128,70 +128,70 @@ export class IndexedDB {
             }
 
             req.onerror = () => {
-                reject(new Error('Failed to open indexedDB.'))
+                reject('Failed to open indexedDB.')
             }
 
             req.onblocked = () => {
-                reject(new Error('Something blocks the connection to indexedDB. Maybe is the older version.'))
+                reject('Something blocks the connection to indexedDB. Maybe is the older version.')
             }
         })
     }
 
     public addData(storeName: string, data: unknown) {
         return new Promise((resolve, reject) => {
-            if (!this._db) reject(new Error('Should open indexedDB first.'))
-            if (!this._db!.objectStoreNames.contains(storeName)) reject(new Error('Should create object store first.'))
+            if (!this._db) reject('Should open indexedDB first.')
+            if (!this._db!.objectStoreNames.contains(storeName)) reject('Should create object store first.')
             const transaction = this._db!.transaction(storeName, transactionMode.readwrite)
             const objectStore = transaction.objectStore(storeName)
 
             const req = objectStore.add(data)
 
             req.onsuccess = () => resolve(null)
-            req.onerror = () => reject(new Error('Failed to add data to object store.'))
+            req.onerror = () => reject('Failed to add data to object store.')
 
             transaction.oncomplete = () => console.log('Transaction complete!')
-            transaction.onerror = () => reject(new Error('Transaction error.'))
+            transaction.onerror = () => reject('Transaction error.')
         })
     }
 
     public updateData(storeName: string, data: unknown) {
         return new Promise((resolve, reject) => {
-            if (!this._db) reject(new Error('Should open indexedDB first.'))
-            if (!this._db!.objectStoreNames.contains(storeName)) reject(new Error('Should create object store first.'))
+            if (!this._db) reject('Should open indexedDB first.')
+            if (!this._db!.objectStoreNames.contains(storeName)) reject('Should create object store first.')
             const transaction = this._db!.transaction(storeName, transactionMode.readwrite)
             const objectStore = transaction.objectStore(storeName)
 
             const req = objectStore.put(data)
 
             req.onsuccess = () => resolve(null)
-            req.onerror = () => reject(new Error('Failed to update data in object store.'))
+            req.onerror = () => reject('Failed to update data in object store.')
 
             transaction.oncomplete = () => console.log('Transaction complete!')
-            transaction.onerror = () => reject(new Error('Transaction error.'))
+            transaction.onerror = () => reject('Transaction error.')
         })
     }
 
     public deleteData(storeName: string, id: IDBValidKey) {
         return new Promise((resolve, reject) => {
-            if (!this._db) reject(new Error('Should open indexedDB first.'))
-            if (!this._db!.objectStoreNames.contains(storeName)) reject(new Error('Should create object store first.'))
+            if (!this._db) reject('Should open indexedDB first.')
+            if (!this._db!.objectStoreNames.contains(storeName)) reject('Should create object store first.')
             const transaction = this._db!.transaction(storeName, transactionMode.readwrite)
             const objectStore = transaction.objectStore(storeName)
 
             const req = objectStore.delete(id)
 
             req.onsuccess = () => resolve(null)
-            req.onerror = () => reject(new Error('Failed to delete data in object store.'))
+            req.onerror = () => reject('Failed to delete data in object store.')
 
             transaction.oncomplete = () => console.log('Transaction complete!')
-            transaction.onerror = () => reject(new Error('Transaction error.'))
+            transaction.onerror = () => reject('Transaction error.')
         })
     }
 
     public getData(storeName: string, id: IDBValidKey) {
         return new Promise((resolve, reject) => {
-            if (!this._db) reject(new Error('Should open indexedDB first.'))
-            if (!this._db!.objectStoreNames.contains(storeName)) reject(new Error('Should create object store first.'))
+            if (!this._db) reject('Should open indexedDB first.')
+            if (!this._db!.objectStoreNames.contains(storeName)) reject('Should create object store first.')
             const transaction = this._db!.transaction(storeName, transactionMode.readonly)
             const objectStore = transaction.objectStore(storeName)
 
@@ -201,17 +201,17 @@ export class IndexedDB {
                 const target = ev.target as EventTarget & { result: IDBDatabase }
                 resolve(target.result)
             }
-            req.onerror = () => reject(new Error('Failed to get data in object store.'))
+            req.onerror = () => reject('Failed to get data in object store.')
 
             transaction.oncomplete = () => console.log('Transaction complete!')
-            transaction.onerror = () => reject(new Error('Transaction error.'))
+            transaction.onerror = () => reject('Transaction error.')
         })
     }
 
     public getAllData(storeName: string) {
         return new Promise((resolve, reject) => {
-            if (!this._db) reject(new Error('Should open indexedDB first.'))
-            if (!this._db!.objectStoreNames.contains(storeName)) reject(new Error('Should create object store first.'))
+            if (!this._db) reject('Should open indexedDB first.')
+            if (!this._db!.objectStoreNames.contains(storeName)) reject('Should create object store first.')
             const transaction = this._db!.transaction(storeName, transactionMode.readonly)
             const objectStore = transaction.objectStore(storeName)
 
@@ -221,10 +221,10 @@ export class IndexedDB {
                 const target = ev.target as EventTarget & { result: IDBDatabase }
                 resolve(target.result)
             }
-            req.onerror = () => reject(new Error('Failed to get all data in object store.'))
+            req.onerror = () => reject('Failed to get all data in object store.')
 
             transaction.oncomplete = () => console.log('Transaction complete!')
-            transaction.onerror = () => reject(new Error('Transaction error.'))
+            transaction.onerror = () => reject('Transaction error.')
         })
     }
 }
