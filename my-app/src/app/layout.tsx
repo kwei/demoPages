@@ -9,6 +9,7 @@ export const metadata = {
   keywords: ['IndexedDB', 'Next.js', 'React.js'],
   openGraph: {
     url: 'https://indexed-db-example.vercel.app/indexedDB',
+    title: 'Example of IndexedDB',
     siteName: 'Example of IndexedDB',
     images: [
       {
