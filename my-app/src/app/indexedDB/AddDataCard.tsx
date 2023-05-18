@@ -36,7 +36,10 @@ export const AddDataCard = () => {
                 }
             }
             dbHandler.addData(storeName, { value: convertedData, type })
-            .finally(() => setIsAdd(false))
+            .finally(() => {
+                setIsAdd(false)
+                setFiles(null)
+            })
         }
     }, [files])
 

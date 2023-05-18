@@ -81,6 +81,7 @@ export const UpdateDataCard = () => {
             .finally(() => {
                 setHasGetData(true)
                 setIsGet(false)
+                setFiles(null)
             })
         }
     }
