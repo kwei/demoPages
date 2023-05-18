@@ -40,8 +40,8 @@ export const Toast = forwardRef<ToastRefType, ToastPropsType>((props, ref) => {
             className={`fixed rounded-5 z-10 border-2 flex flex-col ease-in-out bg-[var(--background)] left-[calc(50%-200px)] min-w-[400px] p-4 transition-all duration-300 top-4 ${style}`}
             style={{ transform: startAnimation ? 'translate(0, 0)' : 'translate(0, -150px)' }}
         >
-            <span className="fonr-semibold text-xl">{title}</span>
-            <span className="fonr-normal text-sm">{desc}</span>
+            <span className="font-semibold text-xl">{title}</span>
+            <span className="font-normal text-sm">{desc}</span>
         </div>
     )
 })
