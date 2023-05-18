@@ -7,7 +7,8 @@ export const metadata = {
   title: 'Example of IndexedDB',
   description: 'Using Next.js and React.js to implement a demo page for indexedDB.',
   keywords: ['IndexedDB', 'Next.js', 'React.js'],
-  url: 'https://indexed-db-example.vercel.app/indexedDB',
+  openGraph: {
+    url: 'https://indexed-db-example.vercel.app/indexedDB',
     siteName: 'Example of IndexedDB',
     images: [
       {
@@ -17,7 +18,8 @@ export const metadata = {
       },
     ],
     locale: 'en-US',
-    type: 'website',
+    type: 'website'
+  }
 }
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
