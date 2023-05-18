@@ -7,8 +7,8 @@ import { UpdateDataCard } from "./UpdateDataCard"
 
 export const metadata = {
   openGraph: {
-    title: 'Example of IndexedDB',
-    siteName: 'Example of IndexedDB',
+    title: 'Online Demo of IndexedDB',
+    siteName: 'Online Demo of IndexedDB',
     description: 'Using Next.js and React.js to implement a demo page for indexedDB.',
     url: 'https://indexed-db-example.vercel.app/indexedDB',
     images: [
