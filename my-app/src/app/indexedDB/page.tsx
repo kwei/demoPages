@@ -5,6 +5,25 @@ import { DeleteDataCard } from "./DeleteDataCard"
 import { DeleteStoreCard } from "./DeleteStoreCard"
 import { UpdateDataCard } from "./UpdateDataCard"
 
+export const metadata = {
+  openGraph: {
+    title: 'Example of IndexedDB',
+    siteName: 'Example of IndexedDB',
+    description: 'Using Next.js and React.js to implement a demo page for indexedDB.',
+    url: 'https://indexed-db-example.vercel.app/indexedDB',
+    images: [
+      {
+        url: 'https://nextjs.org/og.png',
+        width: 600,
+        height: 600,
+      },
+    ],
+    authors: ['KW'],
+    locale: 'en-US',
+    type: 'website'
+  }
+}
+
 export default function Home() {
     
     return (
