@@ -13,7 +13,7 @@ export const metadata = {
     url: 'https://indexed-db-example.vercel.app/indexedDB',
     images: [
       {
-        url: 'https://nextjs.org/og.png',
+        url: '/assets/images/og.png',
         width: 600,
         height: 600,
       },
