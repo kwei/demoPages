@@ -92,7 +92,7 @@ export const UpdateDataCard = () => {
                 
                 if (dataRef.current) {
                     dataRef.current.value = convertedData
-                    dataRef.current.disabled = true
+                    if (type === dataType.file) dataRef.current.disabled = true
                 }
                 return 'Get Data Success'
             })
