@@ -40,26 +40,34 @@ export const AddDataCard = () => {
                     type = dataType.string
                 }
             }
-            dbHandler.addData(storeName, { 
-                value: convertedData, 
-                type 
-            })
-            .then(() => {
+            if (storeName === '') {
                 setToastTitle('Add Data')
-                setToastDesc('Success')
-                setToastType('success')
-                if (toastRef.current) toastRef.current.trigger()
-            })
-            .catch((msg: string) => {
-                setToastTitle('Add Data')
-                setToastDesc(msg)
+                setToastDesc('Please enter store name.')
                 setToastType('error')
                 if (toastRef.current) toastRef.current.trigger()
-            })
-            .finally(() => {
                 setIsAdd(false)
-                setFiles(null)
-            })
+            } else {
+                dbHandler.addData(storeName, { 
+                    value: convertedData, 
+                    type 
+                })
+                .then(() => {
+                    setToastTitle('Add Data')
+                    setToastDesc('Success')
+                    setToastType('success')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .catch((msg: string) => {
+                    setToastTitle('Add Data')
+                    setToastDesc(msg)
+                    setToastType('error')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .finally(() => {
+                    setIsAdd(false)
+                    setFiles(null)
+                })
+            }
         }
     }, [files])
 

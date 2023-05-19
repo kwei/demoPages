@@ -47,28 +47,44 @@ export const UpdateDataCard = () => {
                     type = dataType.string
                 }
             }
-            dbHandler.updateData(storeName, { 
-                value: convertedData, 
-                id: Number(id), 
-                type: type,
-                keys: keysConfig
-            })
-            .then(() => {
+            if (id === '') {
                 setToastTitle('Update Data')
-                setToastDesc('Success')
-                setToastType('success')
-                if (toastRef.current) toastRef.current.trigger()
-            })
-            .catch((msg: string) => {
-                setToastTitle('Update Data')
-                setToastDesc(msg)
+                setToastDesc('Please enter id number.')
                 setToastType('error')
                 if (toastRef.current) toastRef.current.trigger()
-            })
-            .finally(() => {
-                setHasGetData(false)
                 setIsUpdate(false)
-            })
+                setHasGetData(false)
+            } else if (storeName === '') {
+                setToastTitle('Update Data')
+                setToastDesc('Please enter store name.')
+                setToastType('error')
+                if (toastRef.current) toastRef.current.trigger()
+                setIsUpdate(false)
+                setHasGetData(false)
+            } else {
+                dbHandler.updateData(storeName, { 
+                    value: convertedData, 
+                    id: Number(id), 
+                    type: type,
+                    keys: keysConfig
+                })
+                .then(() => {
+                    setToastTitle('Update Data')
+                    setToastDesc('Success')
+                    setToastType('success')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .catch((msg: string) => {
+                    setToastTitle('Update Data')
+                    setToastDesc(msg)
+                    setToastType('error')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .finally(() => {
+                    setHasGetData(false)
+                    setIsUpdate(false)
+                })
+            }
         }
     }, [hasGetData, files, keysConfig])
 

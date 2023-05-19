@@ -26,25 +26,34 @@ export const CreateStoreCard = () => {
             storeKeyRef.current.value = ''
             const customKeys = keyRef.current.value
             keyRef.current.value = ''
-            dbHandler.createStore({
-                name: storeName, 
-                primaryKey: primaryKey === '' ? 'id' : primaryKey, 
-                autoIncrement: primaryKey === '',
-                indexes: customKeys.split(',').map(key => ({ name: key, key }))
-            })
-            .then(() => {
+
+            if (storeName === '') {
                 setToastTitle('Create Store')
-                setToastDesc('Success')
-                setToastType('success')
-                if (toastRef.current) toastRef.current.trigger()
-            })
-            .catch((msg: string) => {
-                setToastTitle('Create Store')
-                setToastDesc(msg)
+                setToastDesc('Please enter store name.')
                 setToastType('error')
                 if (toastRef.current) toastRef.current.trigger()
-            })
-            .finally(() => setIsCreate(false))
+                setIsCreate(false)
+            } else {
+                dbHandler.createStore({
+                    name: storeName, 
+                    primaryKey: primaryKey === '' ? 'id' : primaryKey, 
+                    autoIncrement: primaryKey === '',
+                    indexes: customKeys !== '' ? customKeys.split(',').map(key => ({ name: key, key })) : undefined
+                })
+                .then(() => {
+                    setToastTitle('Create Store')
+                    setToastDesc('Success')
+                    setToastType('success')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .catch((msg: string) => {
+                    setToastTitle('Create Store')
+                    setToastDesc(msg)
+                    setToastType('error')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .finally(() => setIsCreate(false))
+            }
         }
     }
 

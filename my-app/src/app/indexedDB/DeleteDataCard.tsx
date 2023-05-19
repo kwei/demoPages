@@ -22,20 +22,29 @@ export const DeleteDataCard = () => {
             const id = idRef.current.value
             storeNameRef.current.value = ''
             idRef.current.value = ''
-            dbHandler.deleteData(storeName, Number(id))
-            .then(() => {
+            
+            if (storeName === '') {
                 setToastTitle('Delete Data')
-                setToastDesc('Success')
-                setToastType('success')
-                if (toastRef.current) toastRef.current.trigger()
-            })
-            .catch((msg: string) => {
-                setToastTitle('Delete Data')
-                setToastDesc(msg)
+                setToastDesc('Please enter store name.')
                 setToastType('error')
                 if (toastRef.current) toastRef.current.trigger()
-            })
-            .finally(() => setIsDelete(false))
+                setIsDelete(false)
+            } else {
+                dbHandler.deleteData(storeName, Number(id))
+                .then(() => {
+                    setToastTitle('Delete Data')
+                    setToastDesc('Success')
+                    setToastType('success')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .catch((msg: string) => {
+                    setToastTitle('Delete Data')
+                    setToastDesc(msg)
+                    setToastType('error')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .finally(() => setIsDelete(false))
+            }
         }
     }
 

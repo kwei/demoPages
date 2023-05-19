@@ -8,7 +8,6 @@ import { useRef, useState } from "react"
 
 export const DeleteStoreCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
-    const [editKey, setEditKey] = useState<boolean>(false)
     const [isDelete, setIsDelete] = useState<boolean>(false)
     const toastRef = useRef<ToastRefType>(null)
     const [toastTitle, setToastTitle] = useState<string>('')
@@ -20,24 +19,31 @@ export const DeleteStoreCard = () => {
             setIsDelete(true)
             const storeName = storeNameRef.current.value
             storeNameRef.current.value = ''
-            dbHandler.removeStore(storeName)
-            .then(() => {
+
+            if (storeName === '') {
                 setToastTitle('Delete Store')
-                setToastDesc('Success')
-                setToastType('success')
-                if (toastRef.current) toastRef.current.trigger()
-            })
-            .catch((msg: string) => {
-                setToastTitle('Delete Store')
-                setToastDesc(msg)
+                setToastDesc('Please enter store name.')
                 setToastType('error')
                 if (toastRef.current) toastRef.current.trigger()
-            })
-            .finally(() => setIsDelete(false))
+                setIsDelete(false)
+            } else {
+                dbHandler.removeStore(storeName)
+                .then(() => {
+                    setToastTitle('Delete Store')
+                    setToastDesc('Success')
+                    setToastType('success')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .catch((msg: string) => {
+                    setToastTitle('Delete Store')
+                    setToastDesc(msg)
+                    setToastType('error')
+                    if (toastRef.current) toastRef.current.trigger()
+                })
+                .finally(() => setIsDelete(false))
+            }
         }
     }
-
-    const triggerAbleInputKey = () => setEditKey(prevState => !prevState)
     
     return (
         <Card className="flex-col gap-4 flex-1 shrink-0 basis-[48%]">
