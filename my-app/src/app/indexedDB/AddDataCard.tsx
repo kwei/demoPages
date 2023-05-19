@@ -40,7 +40,10 @@ export const AddDataCard = () => {
                     type = dataType.string
                 }
             }
-            dbHandler.addData(storeName, { value: convertedData, type })
+            dbHandler.addData(storeName, { 
+                value: convertedData, 
+                type 
+            })
             .then(() => {
                 setToastTitle('Add Data')
                 setToastDesc('Success')

@@ -1,7 +1,17 @@
-interface storeConfigType {
+import { storeScheme } from "@/app/indexedDB/constants"
+
+export interface storeConfigType {
     name: string
     primaryKey: string
     autoIncrement: boolean
+    indexes?: indexType[]
+}
+
+export interface indexType {
+    name: string
+    key: string
+    unique?: boolean
+    multiEntry?: boolean
 }
 
 enum transactionMode {
@@ -30,7 +40,7 @@ export class IndexedDB {
         this._storeConfig = config
     }
 
-    public rmStore(config: storeConfigType) {
+    public rmStore(storeName?: string) {
         return new Promise((resolve, reject) => {
             if (!('indexedDB' in window)) reject('The browser does not support indexedDB.')
             console.log(`Open indexedDB: [${this._dbname}-${this._dbVersion}]`)
@@ -41,13 +51,13 @@ export class IndexedDB {
                 const target = ev.target as EventTarget & { result: IDBDatabase }
                 const db = target.result
                 this._storeConfig = null
-                if (config) {
-                    console.log(config)
-                    if (db.objectStoreNames.contains(config.name)) {  
+                if (storeName) {
+                    console.log(storeName)
+                    if (db.objectStoreNames.contains(storeName)) {  
                         try {
-                            db.deleteObjectStore(config.name)
+                            db.deleteObjectStore(storeName)
                         } catch {
-                            reject(`Failed to delete object store(${config.name}).`)
+                            reject(`Failed to delete object store(${storeName}).`)
                         }
                     } else {
                         
@@ -105,10 +115,16 @@ export class IndexedDB {
                     console.log(this._storeConfig)
                     if (!db.objectStoreNames.contains(this._storeConfig.name)) {  
                         try {
-                            db.createObjectStore(this._storeConfig.name, { 
+                            const objectStore = db.createObjectStore(this._storeConfig.name, { 
                                 keyPath: this._storeConfig.primaryKey, 
                                 autoIncrement: this._storeConfig.autoIncrement 
                             })
+                            if (this._storeConfig.indexes) {
+                                this._storeConfig.indexes.forEach(indexConfig => {
+                                    objectStore.createIndex(indexConfig.name, indexConfig.key, 
+                                        { unique: indexConfig.unique ?? false, multiEntry: indexConfig.multiEntry ?? false })
+                                })
+                            }
                         } catch {
                             reject(`Failed to create object store(${this._storeConfig.name}).`)
                         }
@@ -137,7 +153,7 @@ export class IndexedDB {
         })
     }
 
-    public addData(storeName: string, data: unknown) {
+    public addData(storeName: string, data: storeScheme) {
         return new Promise((resolve, reject) => {
             if (!this._db) reject('Should open indexedDB first.')
             if (!this._db!.objectStoreNames.contains(storeName)) reject('Should create object store first.')
@@ -154,7 +170,7 @@ export class IndexedDB {
         })
     }
 
-    public updateData(storeName: string, data: unknown) {
+    public updateData(storeName: string, data: storeScheme) {
         return new Promise((resolve, reject) => {
             if (!this._db) reject('Should open indexedDB first.')
             if (!this._db!.objectStoreNames.contains(storeName)) reject('Should create object store first.')

@@ -1,4 +1,5 @@
-import { IndexedDB } from './indexedDBService'
+import { storeScheme } from '@/app/indexedDB/constants'
+import { IndexedDB, storeConfigType } from './indexedDBService'
 
 const SHOULD_OPEN_DB_FIRST = 'Should open DB connection first by clicking "Create DB" button.'
 
@@ -15,13 +16,13 @@ const dbService = () => {
         })
     }
 
-    const createStore = (name: string, primaryKey: string, autoIncrement: boolean) => {
+    const createStore = (config: storeConfigType) => {
         return new Promise(async (resolve, reject) => {
             if (!IndexedDBService) reject(SHOULD_OPEN_DB_FIRST)
             else {
                 IndexedDBService.closeDB()
                 IndexedDBService.newVersion()
-                IndexedDBService.setStore({ name, primaryKey, autoIncrement })
+                IndexedDBService.setStore(config)
                 await IndexedDBService.openDB().then(() => console.log('createStore success'))
                 IndexedDBService.closeDB()
                 resolve('Create Store Success')
@@ -29,13 +30,13 @@ const dbService = () => {
         })
     }
 
-    const removeStore = (name: string, primaryKey: string, autoIncrement: boolean) => {
+    const removeStore = (name: string) => {
         return new Promise(async (resolve, reject) => {
             if (!IndexedDBService) reject(SHOULD_OPEN_DB_FIRST)
             else {
                 IndexedDBService.closeDB()
                 IndexedDBService.newVersion()
-                await IndexedDBService.rmStore({ name, primaryKey, autoIncrement })
+                await IndexedDBService.rmStore(name)
                 IndexedDBService.closeDB()
                 resolve('Delete Store Success')
             }
@@ -64,7 +65,7 @@ const dbService = () => {
         })
     }
     
-    const addData = (storeName: string, data: unknown) => {
+    const addData = (storeName: string, data: storeScheme) => {
         return new Promise(async (resolve, reject) => {
             if (!IndexedDBService) reject(SHOULD_OPEN_DB_FIRST)
             else {
@@ -77,7 +78,7 @@ const dbService = () => {
         })
     }
     
-    const updateData = (storeName: string, data: unknown) => {
+    const updateData = (storeName: string, data: storeScheme) => {
         return new Promise(async (resolve, reject) => {
             if (!IndexedDBService) reject(SHOULD_OPEN_DB_FIRST)
             else {

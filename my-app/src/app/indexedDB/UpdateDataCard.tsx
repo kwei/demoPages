@@ -4,8 +4,9 @@ import { Button } from "@/components/Button"
 import { Card } from "@/components/Card"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useCallback, useRef, useState } from "react"
-import { dataType, fileObjectType } from "./constants"
+import { dataType, fileObjectType, storeScheme } from "./constants"
 import { Toast, ToastRefType } from "@/components/Toast"
+import { indexType } from "@/utils/indexedDBService"
 
 export const UpdateDataCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
@@ -15,6 +16,7 @@ export const UpdateDataCard = () => {
     const [isGet, setIsGet] = useState<boolean>(false)
     const [isUpdate, setIsUpdate] = useState<boolean>(false)
     const [files, setFiles] = useState<fileObjectType[] | null>(null)
+    const [keysConfig, setKeysConfig] = useState<indexType[] | undefined>(undefined)
     const toastRef = useRef<ToastRefType>(null)
     const [toastTitle, setToastTitle] = useState<string>('')
     const [toastDesc, setToastDesc] = useState<string>('')
@@ -45,7 +47,12 @@ export const UpdateDataCard = () => {
                     type = dataType.string
                 }
             }
-            dbHandler.updateData(storeName, { value: convertedData, id: Number(id), type })
+            dbHandler.updateData(storeName, { 
+                value: convertedData, 
+                id: Number(id), 
+                type: type,
+                keys: keysConfig
+            })
             .then(() => {
                 setToastTitle('Update Data')
                 setToastDesc('Success')
@@ -63,7 +70,7 @@ export const UpdateDataCard = () => {
                 setIsUpdate(false)
             })
         }
-    }, [hasGetData, files])
+    }, [hasGetData, files, keysConfig])
 
     const getStore = () => {
         if (storeNameRef.current && idRef.current) {
@@ -72,8 +79,10 @@ export const UpdateDataCard = () => {
             const id = idRef.current.value
             dbHandler.getData(storeName, Number(id))
             .then((data) => {
-                const {value, type} = data as { value: unknown, id: number, type: dataType }
-                console.log('get data', value, type)
+                const {value, id, type, keys} = data as storeScheme
+                console.log('get data', value, type, id, keys)
+                if (keys) setKeysConfig(keys)
+                if (idRef.current) idRef.current.value = ''+id
                 let convertedData = ''
                 if (type === dataType.object) {
                     try {

@@ -42,6 +42,5 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  
   font-family: "Poppins", "Open Sans", Meiryo, 微軟正黑體, "MS UI Gothic", "MS PGothic", Arial, Helvetica, sans-serif !important;
 }
