@@ -76,12 +76,15 @@ export const CreateStoreCard = () => {
                 />
             </div>
             <div className="relative flex flex-col gap-1.25">
-                <span className="relative flex items-center font-semibold gap-1.25">
-                    Primary Key
-                    <span className="select-none cursor-pointer px-2 border border-[var(--border-rgb)]" onClick={triggerAbleInputKey}>
-                        {editKey ? 'close' : 'open'}
+                <div className="relative flex flex-col gap-0.25">
+                    <span className="relative flex items-center font-semibold gap-1.25">
+                        Primary Key
+                        <span className="select-none cursor-pointer px-2 border border-[var(--border-rgb)]" onClick={triggerAbleInputKey}>
+                            {editKey ? 'close' : 'open'}
+                        </span>
                     </span>
-                </span>
+                    <span className="font-normal text-xs">Default primary key is 'id'.</span>
+                </div>
                 <input 
                     ref={storeKeyRef} 
                     className="p-1.25 rounded-1.25 outline-none text-black" 
