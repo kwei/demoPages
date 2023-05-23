@@ -17,6 +17,7 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 import { Page } from '../models';
+import { PageDesc } from '../models';
 import { Test } from '../models';
 /**
  * DefaultApi - axios parameter creator
@@ -161,7 +162,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pageTitleIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Page>>> {
+        async pageTitleIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<PageDesc>>> {
             const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).pageTitleIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -206,7 +207,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pageTitleIdGet(id: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Page>> {
+        async pageTitleIdGet(id: number, options?: AxiosRequestConfig): Promise<AxiosResponse<PageDesc>> {
             return DefaultApiFp(configuration).pageTitleIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -246,7 +247,7 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public async pageTitleIdGet(id: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<Page>> {
+    public async pageTitleIdGet(id: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<PageDesc>> {
         return DefaultApiFp(this.configuration).pageTitleIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
     /**

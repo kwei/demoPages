@@ -7,9 +7,10 @@ import { getTestInfo, getPageInfo } from "@/utils/apiAdapter";
 import { ApiTestResType } from "../api/test/type";
 import { ApiPageTitleResType } from "../api/pageTitle/type";
 import ApiDoc from "./ApiDoc";
+import { ApiPageDescResType } from "../api/pageTitle/[id]/type";
 
 export default function Home() {
-    const [pageDesc, setPageDesc] = useState<string>('Loading...')
+    const [pageDesc, setPageDesc] = useState<string[]>(['Loading...'])
     const [pageTitle, setPageTitle] = useState<string>('Loading...')
 
     useEffect(() => {
@@ -31,7 +32,7 @@ export default function Home() {
         .then(res => {
             console.log("get user info with id: ", res)
             if (!res) return
-            const data = res as ApiPageTitleResType
+            const data = res as ApiPageDescResType
             setPageDesc(data.data)
         })
 
@@ -49,7 +50,7 @@ export default function Home() {
 
     return (
     <>
-        <Header title={pageTitle} descList={[pageDesc]} />
+        <Header title={pageTitle} descList={pageDesc} />
 
         <main className="relative flex w-full h-full flex-row flex-wrap gap-5 p-4 md:p-8 ml:p-12">
             <ApiDoc />
