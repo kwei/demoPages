@@ -6,9 +6,7 @@ import { useEffect, useState } from "react";
 import { getTestInfo, getPageInfo } from "@/utils/apiAdapter";
 import { ApiTestResType } from "../api/test/type";
 import { ApiPageTitleResType } from "../api/pageTitle/type";
-
-const PAGE_TITLE = 'Swagger-Codegen Example'
-const PAGE_DESC = 'Use swagger-codegen to generate the client api sdk from the swagger.yaml file.'
+import ApiDoc from "./ApiDoc";
 
 export default function Home() {
     const [pageDesc, setPageDesc] = useState<string>('Loading...')
@@ -54,7 +52,7 @@ export default function Home() {
         <Header title={pageTitle} descList={[pageDesc]} />
 
         <main className="relative flex w-full h-full flex-row flex-wrap gap-5 p-4 md:p-8 ml:p-12">
-
+            <ApiDoc />
         </main>
 
         <Footer />
