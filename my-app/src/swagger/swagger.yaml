@@ -1,0 +1,65 @@
+# 示例 swagger.yaml 文件
+openapi: 3.0.0
+info:
+  title: Test Swagger API
+  description: Test for using swagger-codegen to auto-generate API interface, and use swagger-ui to show and test API.
+  version: 1.0.0
+
+servers:
+  - url: /api
+
+paths:
+  /pageTitle:
+    get:
+      summary: Test for fetching page title
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+  
+  /pageTitle/{id}:
+    get:
+      summary: Test for fetching page description with any id
+      parameters:
+        - name: id
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+  
+  /test:
+    get:
+      summary: Test for fetching test info
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Test'
+
+
+components:
+  schemas:
+    Page:
+      type: object
+      properties:
+        data:
+          type: string
+    
+    Test:
+      type: object
+      properties:
+        data:
+          type: string
