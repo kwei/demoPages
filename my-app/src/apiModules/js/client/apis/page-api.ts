@@ -18,12 +18,11 @@ import { Configuration } from '../configuration';
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 import { Page } from '../models';
 import { PageDesc } from '../models';
-import { Test } from '../models';
 /**
- * DefaultApi - axios parameter creator
+ * PageApi - axios parameter creator
  * @export
  */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+export const PageApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -99,48 +98,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Test for fetching test info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/test`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions :AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
 /**
- * DefaultApi - functional programming interface
+ * PageApi - functional programming interface
  * @export
  */
-export const DefaultApiFp = function(configuration?: Configuration) {
+export const PageApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -149,7 +114,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async pageTitleGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Page>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).pageTitleGet(options);
+            const localVarAxiosArgs = await PageApiAxiosParamCreator(configuration).pageTitleGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -163,20 +128,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async pageTitleIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<PageDesc>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).pageTitleIdGet(id, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @summary Test for fetching test info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async testGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Test>>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).testGet(options);
+            const localVarAxiosArgs = await PageApiAxiosParamCreator(configuration).pageTitleIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -186,10 +138,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * DefaultApi - factory interface
+ * PageApi - factory interface
  * @export
  */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const PageApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
          * 
@@ -198,7 +150,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async pageTitleGet(options?: AxiosRequestConfig): Promise<AxiosResponse<Page>> {
-            return DefaultApiFp(configuration).pageTitleGet(options).then((request) => request(axios, basePath));
+            return PageApiFp(configuration).pageTitleGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -208,36 +160,27 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         async pageTitleIdGet(id: number, options?: AxiosRequestConfig): Promise<AxiosResponse<PageDesc>> {
-            return DefaultApiFp(configuration).pageTitleIdGet(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Test for fetching test info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async testGet(options?: AxiosRequestConfig): Promise<AxiosResponse<Test>> {
-            return DefaultApiFp(configuration).testGet(options).then((request) => request(axios, basePath));
+            return PageApiFp(configuration).pageTitleIdGet(id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * DefaultApi - object-oriented interface
+ * PageApi - object-oriented interface
  * @export
- * @class DefaultApi
+ * @class PageApi
  * @extends {BaseAPI}
  */
-export class DefaultApi extends BaseAPI {
+export class PageApi extends BaseAPI {
     /**
      * 
      * @summary Test for fetching page title
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof PageApi
      */
     public async pageTitleGet(options?: AxiosRequestConfig) : Promise<AxiosResponse<Page>> {
-        return DefaultApiFp(this.configuration).pageTitleGet(options).then((request) => request(this.axios, this.basePath));
+        return PageApiFp(this.configuration).pageTitleGet(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
@@ -245,19 +188,9 @@ export class DefaultApi extends BaseAPI {
      * @param {number} id user id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof PageApi
      */
     public async pageTitleIdGet(id: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<PageDesc>> {
-        return DefaultApiFp(this.configuration).pageTitleIdGet(id, options).then((request) => request(this.axios, this.basePath));
-    }
-    /**
-     * 
-     * @summary Test for fetching test info
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public async testGet(options?: AxiosRequestConfig) : Promise<AxiosResponse<Test>> {
-        return DefaultApiFp(this.configuration).testGet(options).then((request) => request(this.axios, this.basePath));
+        return PageApiFp(this.configuration).pageTitleIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 }

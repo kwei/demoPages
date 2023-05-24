@@ -1,4 +1,3 @@
-# 示例 swagger.yaml 文件
 openapi: 3.0.0
 info:
   title: Test Swagger API
@@ -7,11 +6,17 @@ info:
 
 servers:
   - url: /api
+  
+tags: 
+  - name: Page
+  - name: Test
 
 paths:
   /pageTitle:
     get:
       summary: Test for fetching page title
+      tags: 
+        - Page
       responses:
         '200':
           description: Successful response
@@ -23,6 +28,8 @@ paths:
   /pageTitle/{id}:
     get:
       summary: Test for fetching page description with any id
+      tags: 
+        - Page
       parameters:
         - name: id
           in: path
@@ -41,6 +48,8 @@ paths:
   /test:
     get:
       summary: Test for fetching test info
+      tags: 
+        - Test
       responses:
         '200':
           description: Successful response
