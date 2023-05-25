@@ -16,8 +16,7 @@ export const metadata = {
       },
       ],
       authors: ['KW'],
-      locale: 'en-US',
-      type: 'website'
+      locale: 'en-US'
   }
 }
 
