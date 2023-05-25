@@ -50,10 +50,10 @@ export default function Home() {
 
     return (
     <>
-        <Header title={pageTitle} descList={pageDesc} />
+        <Header title={pageTitle} descList={pageDesc}></Header>
 
         <main className="relative flex w-full h-full flex-row flex-wrap gap-5 p-4 md:p-8 ml:p-12">
-            <ApiDoc />
+            <ApiDoc url="./assets/swagger/swagger.yaml" />
         </main>
 
         <Footer />
