@@ -5,8 +5,8 @@ import Provider from "@/app/Provider";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Online Demo of IndexedDB',
-  description: 'Using Next.js and React.js to implement a demo page for indexedDB.',
+  title: 'Demo Page',
+  description: 'Using Next.js and React.js to implement a demo page.',
   authors: [{ name: 'KW', url: 'kaiweiyeh2018@gmail.com' }],
   creator: 'KW',
   robots: {

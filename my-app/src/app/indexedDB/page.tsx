@@ -11,24 +11,6 @@ import { Header } from "@/components/Header"
 import {HomeLink} from "@/components/HomeLink";
 import {useRouter} from "next/navigation";
 
-export const metadata = {
-  openGraph: {
-    title: 'Online Demo of IndexedDB',
-    siteName: 'Online Demo of IndexedDB',
-    description: 'Using Next.js and React.js to implement a demo page for indexedDB.',
-    url: 'https://indexed-db-example.vercel.app/indexedDB',
-    images: [
-      {
-        url: '/assets/images/og.png',
-        width: 600,
-        height: 600,
-      },
-    ],
-    authors: ['KW'],
-    locale: 'en-US'
-  }
-}
-
 const PAGE_TITLE = 'Simple Test for IndexedDB'
 const PAGE_DESC1 = 'First, you need to create a DB, then you can create a store. After that, you can add data or delete the store. Of course, you can also delete the DB. The data that has been added can also be updated and deleted.'
 const PAGE_DESC2 = 'Press F12 and select Application tab to observe the data in the IndexedDB in the Storage section.'
