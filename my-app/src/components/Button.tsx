@@ -27,7 +27,7 @@ export const Button = memo((props: ButtonPropsType) => {
 
     return (
         <button 
-            className={`relative select-none w-fit font-semibold border h-fit rounded-2.5 whitespace-nowrap cursor-pointer px-8 py-2 ${btnColor} ${btnStyle} ${loading ? 'cursor-progress' : ''}`}
+            className={`relative select-none w-fit font-semibold border h-fit rounded-2.5 whitespace-nowrap cursor-pointer select-none px-8 py-2 ${btnColor} ${btnStyle} ${loading ? 'cursor-progress' : ''}`}
             onClick={onClick}
             disabled={loading}
         >

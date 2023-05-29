@@ -8,10 +8,13 @@ import { ApiTestResType } from "../api/test/type";
 import { ApiPageTitleResType } from "../api/pageTitle/type";
 import ApiDoc from "./ApiDoc";
 import { ApiPageDescResType } from "../api/pageTitle/[id]/type";
+import {useRouter} from "next/navigation";
+import {HomeLink} from "@/components/HomeLink";
 
 export default function Home() {
     const [pageDesc, setPageDesc] = useState<string[]>(['Loading...'])
     const [pageTitle, setPageTitle] = useState<string>('Loading...')
+    const router = useRouter()
 
     useEffect(() => {
         getTestInfo()
@@ -51,6 +54,8 @@ export default function Home() {
     return (
     <>
         <Header title={pageTitle} descList={pageDesc}></Header>
+
+        <HomeLink router={router} />
 
         <main className="relative flex w-full h-full flex-row flex-wrap gap-5 p-4 md:p-8 ml:p-12">
             <ApiDoc url="./assets/swagger/swagger.yaml" />
