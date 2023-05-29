@@ -8,7 +8,7 @@ import { dataType, fileObjectType, storeScheme } from "./constants"
 import { Toast, ToastRefType } from "@/components/Toast"
 import { indexType } from "@/utils/indexedDBService"
 
-export const UpdateDataCard = () => {
+const UpdateDataCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
     const dataRef = useRef<HTMLInputElement>(null)
     const idRef = useRef<HTMLInputElement>(null)
@@ -33,8 +33,8 @@ export const UpdateDataCard = () => {
             dataRef.current.disabled = false
             idRef.current.value = ''
             storeNameRef.current.value = ''
-            let convertedData = null
-            let type = dataType.string
+            let convertedData
+            let type
             if (files) {
                 convertedData = files
                 type = dataType.file
@@ -99,7 +99,7 @@ export const UpdateDataCard = () => {
                 console.log('get data', value, type, id, keys)
                 if (keys) setKeysConfig(keys)
                 if (idRef.current) idRef.current.value = ''+id
-                let convertedData = ''
+                let convertedData
                 if (type === dataType.object) {
                     try {
                         convertedData = JSON.stringify(value)
@@ -241,3 +241,5 @@ export const UpdateDataCard = () => {
         </Card>
     )
 }
+
+export default UpdateDataCard

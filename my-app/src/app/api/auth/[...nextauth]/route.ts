@@ -1,6 +1,6 @@
 import GoogleProvider from "next-auth/providers/google"
-import NextAuth, {Account, Profile, User} from "next-auth";
-import {AdapterUser} from "next-auth/adapters";
+import NextAuth, { Account, Profile, User } from "next-auth"
+import { AdapterUser } from "next-auth/adapters"
 
 const clientId = process.env.GOOGLE_CLIENT_ID ?? ''
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET ?? ''

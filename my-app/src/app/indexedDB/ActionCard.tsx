@@ -6,7 +6,7 @@ import dbHandler from "@/utils/indexedDBHandler"
 import { Button } from "@/components/Button"
 import { Toast, ToastRefType } from "@/components/Toast"
 
-export const ActionCard = () => {
+const ActionCard = () => {
     const dbNameRef = useRef<HTMLInputElement>(null)
     const toastRef = useRef<ToastRefType>(null)
     const [isDelete, setIsDelete] = useState<boolean>(false)
@@ -79,3 +79,5 @@ export const ActionCard = () => {
         </Card>
     )
 }
+
+export default ActionCard

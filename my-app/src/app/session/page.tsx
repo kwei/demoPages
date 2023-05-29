@@ -1,16 +1,8 @@
-'use client'
+import { SessionTest } from "@/app/session/SessionTest"
 
-import {SessionTest} from "@/app/SessionTest";
-import {useRouter} from "next/navigation";
-import {HomeLink} from "@/components/HomeLink";
-
-export default async function Home()
-{
-    const router = useRouter()
-
+export default async function Home() {
     return (
         <>
-            <HomeLink router={router} />
             <SessionTest />
         </>
     )

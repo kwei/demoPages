@@ -8,7 +8,7 @@ import { dataType, fileObjectType } from "./constants"
 import { Toast, ToastRefType } from "@/components/Toast"
 
 
-export const AddDataCard = () => {
+const AddDataCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
     const dataRef = useRef<HTMLInputElement>(null)
     const [isAdd, setIsAdd] = useState<boolean>(false)
@@ -26,8 +26,8 @@ export const AddDataCard = () => {
             const data = dataRef.current.value
             dataRef.current.value = ''
             dataRef.current.disabled = false
-            let convertedData = null
-            let type = dataType.string
+            let convertedData
+            let type
             if (files) {
                 convertedData = files
                 type = dataType.file
@@ -149,3 +149,5 @@ export const AddDataCard = () => {
         </Card>
     )
 }
+
+export default AddDataCard

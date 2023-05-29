@@ -6,7 +6,7 @@ import { Toast, ToastRefType } from "@/components/Toast"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useRef, useState } from "react"
 
-export const DeleteStoreCard = () => {
+const DeleteStoreCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
     const [isDelete, setIsDelete] = useState<boolean>(false)
     const toastRef = useRef<ToastRefType>(null)
@@ -65,3 +65,5 @@ export const DeleteStoreCard = () => {
         </Card>
     )
 }
+
+export default DeleteStoreCard

@@ -1,5 +1,5 @@
-import {AppRouterInstance} from "next/dist/shared/lib/app-router-context";
+import Link from "next/link";
 
-export const HomeLink = ({router}: {router: AppRouterInstance}) => {
-    return <span className='fixed z-50 top-4 right-4 cursor-pointer select-none' onClick={() => router.push('/')}>Go to Home</span>
+export const HomeLink = () => {
+    return <Link href='/' className='fixed z-50 top-4 right-4 cursor-pointer select-none'>Go to Home</Link>
 }

@@ -6,7 +6,7 @@ import { Toast, ToastRefType } from "@/components/Toast"
 import dbHandler from "@/utils/indexedDBHandler"
 import { useRef, useState } from "react"
 
-export const CreateStoreCard = () => {
+const CreateStoreCard = () => {
     const storeNameRef = useRef<HTMLInputElement>(null)
     const storeKeyRef = useRef<HTMLInputElement>(null)
     const keyRef = useRef<HTMLInputElement>(null)
@@ -115,3 +115,5 @@ export const CreateStoreCard = () => {
         </Card>
     )
 }
+
+export default CreateStoreCard

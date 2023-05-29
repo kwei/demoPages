@@ -32,6 +32,15 @@ export class IndexedDB {
         this._db = null
     }
 
+    private __onsuccessFunc(event: Event, callBack: any) {
+        console.log('onsuccess')
+        const target = event.target as EventTarget & { result: IDBDatabase }
+        this._db = target.result
+        console.log('Current database version:', this._db.version);
+        this._dbVersion = this._db.version
+        callBack(null)
+    }
+
     public newVersion() {
         this._dbVersion = this._dbVersion ? this._dbVersion + 1 : 1
     }
@@ -65,14 +74,7 @@ export class IndexedDB {
                 }
             }
 
-            req.onsuccess = (ev) => {
-                console.log('onsuccess')
-                const target = ev.target as EventTarget & { result: IDBDatabase }
-                this._db = target.result
-                console.log('Current database version:', this._db.version);
-                this._dbVersion = this._db.version
-                resolve(null)
-            }
+            req.onsuccess = (ev) => this.__onsuccessFunc(ev, resolve)
 
             req.onerror = () => {
                 reject('Failed to open indexedDB.')
@@ -134,14 +136,7 @@ export class IndexedDB {
                 }
             }
 
-            req.onsuccess = (ev) => {
-                console.log('onsuccess')
-                const target = ev.target as EventTarget & { result: IDBDatabase }
-                this._db = target.result
-                console.log('Current database version:', this._db.version);
-                this._dbVersion = this._db.version
-                resolve(null)
-            }
+            req.onsuccess = (ev) => this.__onsuccessFunc(ev, resolve)
 
             req.onerror = () => {
                 reject('Failed to open indexedDB.')
@@ -245,11 +240,11 @@ export class IndexedDB {
     }
 }
 
-function configComparison(configList: storeConfigType[], config: storeConfigType) {
-    return configList.map((c, index) => {
-        if (c.primaryKey === config.primaryKey && c.name === config.name && c.autoIncrement === config.autoIncrement) {
-            return index
-        }
-        return -1
-    })
-}
+// function configComparison(configList: storeConfigType[], config: storeConfigType) {
+//     return configList.map((c, index) => {
+//         if (c.primaryKey === config.primaryKey && c.name === config.name && c.autoIncrement === config.autoIncrement) {
+//             return index
+//         }
+//         return -1
+//     })
+// }
