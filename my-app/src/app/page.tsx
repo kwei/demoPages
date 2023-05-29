@@ -1,6 +1,8 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import Link from "next/link";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/app/api/auth/[...nextauth]/route";
 
 export const metadata = {
   openGraph: {
@@ -25,30 +27,40 @@ const PAGE_DESC1 = 'This site has some features about testing techniques.'
 const PAGE_DESC2 = 'There is a page about testing indexedDB usage at path "/indexedDB".'
 const PAGE_DESC3 = 'There is also a page about testing swagger tools such as swagger-codegen and swagger-ui at path "/swagger".'
 
-export default function Home() {
-  return (
-    <>
-      <Header title={PAGE_TITLE} descList={[PAGE_DESC1, PAGE_DESC2, PAGE_DESC3]} />
+export default async function Home() {
+    const session = await getServerSession(authOptions)
+    console.log("session: ", session)
 
-      <main className="relative flex w-full h-full flex-row flex-wrap gap-5 p-4 md:p-8 ml:p-12">
+    return (
+        <>
+            <Header title={PAGE_TITLE} descList={[PAGE_DESC1, PAGE_DESC2, PAGE_DESC3]}/>
 
-        <Link 
-          className="p-4 cursor-pointer select-none border border-solid border-[var(--border-rgb)] rounded-5 font-bold text-xl" 
-          href='./indexedDB'
-        >
-          Demo IndexedDB
-        </Link>
+            <main className="relative flex w-full h-full flex-row flex-wrap gap-5 p-4 md:p-8 ml:p-12">
 
-        <Link 
-          className="p-4 cursor-pointer select-none border border-solid border-[var(--border-rgb)] rounded-5 font-bold text-xl" 
-          href='./swagger'
-        >
-          Demo Swagger
-        </Link>
-        
-      </main>
+                <Link
+                    className="p-4 cursor-pointer select-none border border-solid border-[var(--border-rgb)] rounded-5 font-bold text-xl"
+                    href='./indexedDB'
+                >
+                    Demo IndexedDB
+                </Link>
 
-      <Footer />
-    </>
-  )
+                <Link
+                    className="p-4 cursor-pointer select-none border border-solid border-[var(--border-rgb)] rounded-5 font-bold text-xl"
+                    href='./swagger'
+                >
+                    Demo Swagger
+                </Link>
+
+                <Link
+                    className="p-4 cursor-pointer select-none border border-solid border-[var(--border-rgb)] rounded-5 font-bold text-xl"
+                    href='./session'
+                >
+                    Demo Next Auth
+                </Link>
+
+            </main>
+
+            <Footer/>
+        </>
+    )
 }
