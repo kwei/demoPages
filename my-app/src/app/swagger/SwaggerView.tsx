@@ -3,10 +3,9 @@
 import ApiDoc from "@/app/swagger/ApiDoc";
 import React from "react";
 import {PageTitle} from "@/components/PageTitle";
-import {useFetchPageDesc, useFetchPageTitle} from "@/app/swagger/hooks";
+import {useFetchPageDesc} from "@/app/swagger/hooks";
 
-const SwaggerView = () => {
-    const { data: pageTitle } = useFetchPageTitle()
+const SwaggerView = ({pageTitle = ''}: {pageTitle?: string}) => {
     const { data: pageDesc } = useFetchPageDesc()
     return (
         <>

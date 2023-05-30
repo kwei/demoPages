@@ -36,6 +36,7 @@ export default async function Home() {
                 <RouteLink label='Demo IndexedDB' link='/indexedDB'/>
                 <RouteLink label='Demo Swagger' link='/swagger'/>
                 <RouteLink label='Demo Next Auth' link='/session'/>
+                <RouteLink label='Demo Data Fetch' link='/dataFetching'/>
             </div>
         </>
     )

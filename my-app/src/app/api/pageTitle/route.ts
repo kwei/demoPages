@@ -1,6 +1,7 @@
 import { NextApiResponse } from "next";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { getPageTitle } from "./getPageTitle";
 
 export async function GET(req: NextRequest, res: NextApiResponse<string>) {
-    return NextResponse.json({ data: 'Swagger-Codegen Example'})
+    return getPageTitle()
 }
