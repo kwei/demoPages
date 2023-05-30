@@ -28,7 +28,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body className={inter.className}>
         <Provider>
           <HomeLink />
-          {children}
+            <main className="relative flex flex-col w-full h-full min-h-[800px] p-4 md:p-8 ml:p-12">
+              {children}
+            </main>
           <Footer/>
         </Provider>
       </body>

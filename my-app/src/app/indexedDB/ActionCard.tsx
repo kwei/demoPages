@@ -54,7 +54,7 @@ const ActionCard = () => {
     }
 
     return (
-        <Card className="flex-col gap-4 flex-1 shrink-0 basis-[48%]">
+        <Card className="flex-col gap-4 flex-1 shrink-0 basis-[48%] items-stretch">
             <div className="relative flex flex-col gap-1.25">
                 <span className="font-bold text-xl">Create or Delete DB</span>
                 <span className="font-normal text-sm">Default DB name is "my-app".</span>

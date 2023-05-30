@@ -1,20 +1,13 @@
-"use client"
-
-import { Header } from "@/components/Header"
-import ApiDoc from "./ApiDoc"
-import { useFetchPageDesc, useFetchPageTitle } from "@/app/swagger/hooks"
+import {Loading} from "@/components/Loading";
+import React, {Suspense} from "react";
+import SwaggerView from "@/app/swagger/SwaggerView";
 
 export default function Home() {
-    const { data: pageTitle } = useFetchPageTitle()
-    const { data: pageDesc } = useFetchPageDesc()
-
     return (
     <>
-        <Header title={pageTitle} descList={pageDesc}></Header>
-
-        <main className="relative flex w-full h-full flex-row flex-wrap gap-5 p-4 md:p-8 ml:p-12">
-            <ApiDoc url="./assets/swagger/swagger.yaml" />
-        </main>
+        <Suspense fallback={<Loading className={'m-auto'} />}>
+            <SwaggerView />
+        </Suspense>
     </>
     )
 }
