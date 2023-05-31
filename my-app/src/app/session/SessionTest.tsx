@@ -18,13 +18,15 @@ export const SessionTest = () => {
 
     return (
         <>
-            <div className='rounded-full overflow-hidden w-30 h-30 text-center text-3xl'>
+            <div className='rounded-full w-40 h-40 overflow-hidden text-center text-3xl'>
                 {session.user.image ?
                     <Image
                         src={session.user.image ?? ''}
                         alt={session.user.name ?? ''}
-                        width={100}
-                        height={100}
+                        width={160}
+                        height={160}
+                        quality={100}
+                        priority={true}
                     />
                     :
                     <>{session.user.name ? session.user.name.slice(0, 1) : 'X'}</>
