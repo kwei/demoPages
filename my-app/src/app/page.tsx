@@ -8,7 +8,7 @@ export const metadata = {
       title: 'Online Demo Base Page',
       siteName: 'Online Demo Base Page',
       description: 'Using Next.js and React.js to implement a demo page.',
-      url: 'https://indexed-db-example.vercel.app/',
+      url: 'https://kw-demo-page.vercel.app/',
       images: [
       {
           url: '/assets/images/og.png',
@@ -16,7 +16,7 @@ export const metadata = {
           height: 600,
       },
       ],
-      authors: ['KW'],
+      authors: [{ name: 'KW', url: 'kaiweiyeh2018@gmail.com' }],
       locale: 'en-US'
   }
 }

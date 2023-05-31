@@ -4,7 +4,25 @@ import ProductList from "@/app/dataFetching/ProductList"
 import { PageTitle } from "@/components/PageTitle"
 import { ProductDataType } from "@/app/dataFetching/type"
 import { ALL_PRODUCT_URL } from "@/app/dataFetching/constants"
-import {Saver} from "@/app/dataFetching/Saver";
+import { Saver } from "@/app/dataFetching/Saver"
+
+export const metadata = {
+    openGraph: {
+        title: 'Online Demo of Data Fetching',
+        siteName: 'Online Demo Data Fetching Page',
+        description: 'Using Next.js and React.js to implement a demo page.',
+        url: 'https://kw-demo-page.vercel.app/dataFetching',
+        images: [
+            {
+                url: '/assets/images/og.png',
+                width: 600,
+                height: 600,
+            },
+        ],
+        authors: [{ name: 'KW', url: 'kaiweiyeh2018@gmail.com' }],
+        locale: 'en-US'
+    }
+}
 
 const PAGE_TITLE = 'Fetch data at server side'
 const PAGE_DESC = 'Fetch fake products from ' + ALL_PRODUCT_URL
