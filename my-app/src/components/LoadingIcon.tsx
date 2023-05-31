@@ -22,7 +22,7 @@ export enum LOADING_COLOR {
   DEFAULT = 'border-white border-t-transparent ',
 }
 
-export const Loading: React.FC<LoadingPropsType> = (
+export const LoadingIcon: React.FC<LoadingPropsType> = (
   props: LoadingPropsType
 ) => {
   const {

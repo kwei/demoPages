@@ -21,7 +21,7 @@ const dbService = () => {
             if (!IndexedDBService) reject(SHOULD_OPEN_DB_FIRST)
             else {
                 IndexedDBService.closeDB()
-                IndexedDBService.newVersion()
+                if (!IndexedDBService.storeExisted(config.name)) IndexedDBService.newVersion()
                 IndexedDBService.setStore(config)
                 await IndexedDBService.openDB().then(() => console.log('createStore success'))
                 IndexedDBService.closeDB()
@@ -35,8 +35,10 @@ const dbService = () => {
             if (!IndexedDBService) reject(SHOULD_OPEN_DB_FIRST)
             else {
                 IndexedDBService.closeDB()
-                IndexedDBService.newVersion()
-                await IndexedDBService.rmStore(name)
+                if (IndexedDBService.storeExisted(name)) {
+                    IndexedDBService.newVersion()
+                    await IndexedDBService.rmStore(name)
+                }
                 IndexedDBService.closeDB()
                 resolve('Delete Store Success')
             }

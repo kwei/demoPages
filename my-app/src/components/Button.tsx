@@ -1,7 +1,7 @@
 "use client"
 
 import { ReactNode, memo, useMemo } from "react"
-import { Loading } from "./Loading"
+import { LoadingIcon } from "./LoadingIcon"
 
 interface ButtonPropsType {
     children: ReactNode
@@ -32,7 +32,7 @@ export const Button = memo((props: ButtonPropsType) => {
             disabled={loading}
         >
             <div className={`${loading ? 'absolute w-full left-0 flex' : 'hidden'}`}>
-                <Loading className="m-auto" />
+                <LoadingIcon className="m-auto" />
             </div>
             <div className={`${loading ? 'invisible' : 'visible'}`}>
                 {children}

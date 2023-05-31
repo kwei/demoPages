@@ -21,9 +21,8 @@ export const SessionTest = () => {
             <div className='rounded-full overflow-hidden w-30 h-30 text-center text-3xl'>
                 {session.user.image ?
                     <Image
-                        className="m-auto h-full w-full object-cover"
                         src={session.user.image ?? ''}
-                        alt=''
+                        alt={session.user.name ?? ''}
                         width={100}
                         height={100}
                     />

@@ -1,4 +1,4 @@
-import { Loading } from "@/components/Loading"
+import { LoadingIcon } from "@/components/LoadingIcon"
 import React, { Suspense } from "react"
 import SwaggerView from "@/app/swagger/SwaggerView"
 import { getPageTitle } from "@/app/api/pageTitle/getPageTitle"
@@ -9,7 +9,7 @@ export default async function Home() {
 
     return (
         <>
-            <Suspense fallback={<Loading className={'m-auto'}/>}>
+            <Suspense fallback={<LoadingIcon className={'m-auto'}/>}>
                 <SwaggerView pageTitle={pageTitle.data} />
             </Suspense>
         </>

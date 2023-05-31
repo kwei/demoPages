@@ -1,6 +1,12 @@
-export interface ArticleDataType {
-    userId: number
+export interface ProductDataType {
     id: number
     title: string
-    body: string
+    price: number
+    description: string
+    category: string
+    image: string
+    rating: {
+        rate: number
+        count: number
+    }
 }

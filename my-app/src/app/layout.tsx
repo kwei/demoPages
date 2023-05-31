@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Provider from "@/app/Provider";
 import {HomeLink} from "@/components/HomeLink";
 import {Footer} from "@/components/Footer";
+import {ReactNode} from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,10 +20,10 @@ export const metadata = {
       follow: true
     }
   },
-  metadataBase: new URL('https://indexed-db-example.vercel.app'),
+  metadataBase: new URL('https://kw-demo-page.vercel.app/'),
 }
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({children}: {children: ReactNode}) {
   return (
     <html lang="en">
       <body className={inter.className}>

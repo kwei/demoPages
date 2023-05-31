@@ -45,6 +45,10 @@ export class IndexedDB {
         this._dbVersion = this._dbVersion ? this._dbVersion + 1 : 1
     }
 
+    public storeExisted(storeName: string) {
+        return this._db?.objectStoreNames.contains(storeName)
+    }
+
     public setStore(config: storeConfigType) {
         this._storeConfig = config
     }
