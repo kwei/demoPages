@@ -19,7 +19,7 @@ export const metadata = {
                 height: 600,
             },
         ],
-        authors: [{ name: 'KW', url: 'kaiweiyeh2018@gmail.com' }],
+        authors: 'KW',
         locale: 'en-US'
     }
 }
